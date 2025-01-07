@@ -83,6 +83,38 @@ class BlocServiceTest {
         verify(blocRepository, times(1)).save(newBloc);
     }
 
+    @Test
+    void testModifyBloc() {
+        // Arrange: Create an existing Bloc object and its updated version.
+        Bloc existingBloc = Bloc.builder()
+                .idBloc(1L)
+                .nomBloc("Bloc A")
+                .capaciteBloc(100)
+                .build();
+
+        Bloc updatedBloc = Bloc.builder()
+                .idBloc(1L)
+                .nomBloc("Bloc A Updated")
+                .capaciteBloc(150)
+                .build();
+
+        // Mock repository behavior.
+        when(blocRepository.save(any(Bloc.class))).thenReturn(updatedBloc);
+
+        // Act: Call the modifyBloc method.
+        Bloc result = blocService.modifyBloc(updatedBloc);
+
+        // Assert: Verify that the returned Bloc has the updated properties.
+        assertNotNull(result);
+        assertEquals(1L, result.getIdBloc());
+        assertEquals("Bloc A Updated", result.getNomBloc());
+        assertEquals(150, result.getCapaciteBloc());
+
+        // Verify repository interaction.
+        verify(blocRepository, times(1)).save(updatedBloc);
+    }
+
+
 
 
 }
