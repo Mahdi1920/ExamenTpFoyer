@@ -13,10 +13,7 @@ import java.util.*;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Test unitaire pour la classe BlocServiceImpl.
- * Utilise Mockito pour simuler les interactions avec BlocRepository.
- */
+
 @ExtendWith(MockitoExtension.class)
 class BlocServiceTest {
 
@@ -43,10 +40,7 @@ class BlocServiceTest {
         );
     }
 
-    /**
-     * 🧪 Test de la méthode retrieveBloc.
-     * Vérifie qu'un bloc est correctement retourné par son ID.
-     */
+
     @Test
     void testRetrieveBlocById() {
         //Simule la réponse du repository pour l'ID 1
@@ -63,6 +57,32 @@ class BlocServiceTest {
         // Vérifie que la méthode findById a été appelée une fois
         verify(blocRepository, times(1)).findById(1L);
     }
+
+    @Test
+    void testAddBloc() {
+        //  Create a Bloc object that you want to add.
+        Bloc newBloc = Bloc.builder()
+                .idBloc(3L)
+                .nomBloc("Bloc C")
+                .capaciteBloc(200)
+                .build();
+
+        // Mock the repository to simulate saving a new Bloc.
+        when(blocRepository.save(any(Bloc.class))).thenReturn(newBloc);
+
+        // Call the service method to add the new bloc.
+        Bloc result = blocService.addBloc(newBloc);
+
+        // Verify that the result is not null and matches the expected values.
+        assertNotNull(result);
+        assertEquals("Bloc C", result.getNomBloc());
+        assertEquals(200, result.getCapaciteBloc());
+        assertEquals(3L, result.getIdBloc());
+
+        // Verify that the repository save method was called once with the correct object.
+        verify(blocRepository, times(1)).save(newBloc);
+    }
+
 
 
 }
