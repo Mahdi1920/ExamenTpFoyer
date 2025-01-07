@@ -61,4 +61,17 @@ class ReservationTest {
 		Assertions.assertEquals("res", result.getIdReservation());
 		Mockito.verify(reservationRepository, Mockito.times(1)).findById("res");
 	}
+	@Test
+	void testRetrieveAllReservations() {
+		// Mock repository response
+		Mockito.when(reservationRepository.findAll()).thenReturn(litReservations);
+
+		// Call service method
+		List<Reservation> reservations = reservationService.retrieveAllReservations();
+
+		// Assertions
+		Assertions.assertNotNull(reservations);
+		Assertions.assertEquals(2, reservations.size());
+		Mockito.verify(reservationRepository, Mockito.times(1)).findAll();
+	}
 }
