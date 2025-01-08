@@ -1,14 +1,11 @@
 package tn.esprit.tpfoyer;
 
-import lombok.Builder;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.tpfoyer.entity.Reservation;
 import tn.esprit.tpfoyer.repository.ReservationRepository;
@@ -73,5 +70,33 @@ class ReservationTest {
 		Assertions.assertNotNull(reservations);
 		Assertions.assertEquals(2, reservations.size());
 		Mockito.verify(reservationRepository, Mockito.times(1)).findAll();
+	}
+
+	@Test
+	void testAddReservation() {
+		// Mock repository response
+		Mockito.when(reservationRepository.save(reservation)).thenReturn(reservation);
+
+		// Call service method
+		Reservation result = reservationService.addReservation(reservation);
+
+		// Assertions
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals("res", result.getIdReservation());
+		Mockito.verify(reservationRepository, Mockito.times(1)).save(reservation);
+	}
+
+	@Test
+	void testModifyReservation() {
+		// Mock repository response
+		Mockito.when(reservationRepository.save(reservation)).thenReturn(reservation);
+
+		// Call service method
+		Reservation result = reservationService.modifyReservation(reservation);
+
+		// Assertions
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals("res", result.getIdReservation());
+		Mockito.verify(reservationRepository, Mockito.times(1)).save(reservation);
 	}
 }
