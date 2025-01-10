@@ -99,4 +99,35 @@ class ReservationTest {
 		Assertions.assertEquals("res", result.getIdReservation());
 		Mockito.verify(reservationRepository, Mockito.times(1)).save(reservation);
 	}
+
+	@Test
+	void testRemoveReservation() {
+		// Mock repository behavior
+		Mockito.doNothing().when(reservationRepository).deleteById("res");
+
+		// Call service method
+		reservationService.removeReservation("res");
+
+		// Verify interaction with repository
+		Mockito.verify(reservationRepository, Mockito.times(1)).deleteById("res");
+	}
+
+	@Test
+	void testTrouverResSelonDateEtStatus() {
+		// Mock repository response
+		Date testDate = new Date();
+		Mockito.when(reservationRepository.findAllByAnneeUniversitaireBeforeAndEstValide(testDate, true))
+				.thenReturn(Arrays.asList(reservation));
+
+		// Call service method
+		List<Reservation> results = reservationService.trouverResSelonDateEtStatus(testDate, true);
+
+		// Assertions
+		Assertions.assertNotNull(results);
+		Assertions.assertEquals(1, results.size());
+		Assertions.assertEquals("res", results.get(0).getIdReservation());
+		Mockito.verify(reservationRepository, Mockito.times(1))
+				.findAllByAnneeUniversitaireBeforeAndEstValide(testDate, true);
+	}
 }
+
