@@ -116,7 +116,7 @@ class ReservationTest {
 	void testTrouverResSelonDateEtStatus() {
 		// Mock repository response
 		Date testDate = new Date();
-		Mockito.when(reservationRepositmkdry.findAllByAnneeUniversitaireBeforeAndEstValide(testDate, true))
+		Mockito.when(reservationRepository.findAllByAnneeUniversitaireBeforeAndEstValide(testDate, true))
 				.thenReturn(Arrays.asList(reservation));
 
 		// Call service method
