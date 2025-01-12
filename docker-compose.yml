@@ -17,7 +17,7 @@ services:
   app:
     depends_on:
       - mysqldb
-    image: mchabbouh/examentpfoyer:2.0.0
+    image: mchabbouh/examentpfoyer:3.0.0
     restart: on-failure
     #env_file: ./.env
     ports:
