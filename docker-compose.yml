@@ -2,7 +2,7 @@ version: "2.29.7"
 
 services:
   mysqldb:
-    image: mysql:5.7
+    image: mysql:8.3.0
     restart: unless-stopped
     #env_file: ./.env
     environment:
