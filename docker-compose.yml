@@ -14,8 +14,6 @@ services:
       - 3306:3306
     volumes:
       - db:/var/lib/mysql
-    networks:
-      - examenfoyer
   app:
     depends_on:
       - mysqldb
@@ -29,17 +27,12 @@ services:
         "spring.datasource.url"  : "jdbc:mysql://mysqldb:3306/foyer?createDatabaseIfNotExist=true",
         "spring.datasource.username" : "root",
         "spring.datasource.password" : null ,
-        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect",
         "spring.jpa.hibernate.ddl-auto" : "update"
       }'
     volumes:
       - .m2:/root/.m2
-    networks:
-      - examenfoyer
     stdin_open: true
     tty: true
 
 volumes:
   db :
-networks:
-  examenfoyer:
