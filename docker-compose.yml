@@ -14,7 +14,7 @@ services:
   app:
     depends_on:
       - mysqldb
-    image: mchabbouh/examentpfoyer:3.0.0
+    image: mchabbouh/examentpfoyer:1.0.0
     restart: on-failure
     #env_file: ./.env
     ports:
@@ -25,11 +25,22 @@ services:
         "spring.datasource.username" : "root",
         "spring.datasource.password" : "" ,
         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
-        "spring.jpa.hibernate.ddl-auto" : "update"
+        "spring.jpa.hibernate.ddl-auto" : "update",
+         "management.endpoints.web.exposure.include" : "health,info,prometheus",
+        "management.endpoint.prometheus.enabled" : true
       }'
     volumes:
       - .m2:/root/.m2
     stdin_open: true
     tty: true
+
+  mysqldb-exporter:
+    image: prom/mysqld-exporter:latest
+    restart: unless-stopped
+    ports:
+      - "9104:9104"
+    environment:
+      DATA_SOURCE_NAME: root:@(mysqldb:3306)/foyer
+
 volumes:
   dbvolume :
