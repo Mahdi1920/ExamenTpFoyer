@@ -1,15 +1,12 @@
 version: "2.29.7"
-
 services:
   mysqldb:
     image: mysql:8.3.0
     restart: unless-stopped
-    #env_file: ./.env
     environment:
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
       - MYSQL_DATABASE=foyer
-
     ports:
       - 3306:3306
     volumes:
@@ -34,31 +31,5 @@ services:
       - .m2:/root/.m2
     stdin_open: true
     tty: true
-
-#  prometheus:
-#    #image: prom/prometheus:latest
-#    container_name: prometheus
-#    restart: unless-stopped
-#    ports:
-#      - 9090:9090
-#
-#    networks:
-#      - monitoring
-#  grafana:
-#    #image: grafana/grafana:latest
-#    container_name: grafana
-#    restart: unless-stopped
-#    ports:
-#      - 3000:3000
-#    networks:
-#      - monitoring
-#    environment:
-#      - GF_SECURITY_ADMIN_USER=admin
-#      - GF_SECURITY_ADMIN_PASSWORD=admin
-#    depends_on:
-#      - prometheus
-#networks:
-#  monitoring:
-#    driver: bridge
 volumes:
   dbvolume :
