@@ -43,6 +43,7 @@ services:
       - 9090:9090
     networks:
       - monitoring
+    image: prom/prometheus:latest
   grafana:
     #image: grafana/grafana:latest
     container_name: grafana
@@ -56,6 +57,7 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - prometheus
+    image: grafana/grafana:latest
 networks:
   monitoring:
     driver: bridge
