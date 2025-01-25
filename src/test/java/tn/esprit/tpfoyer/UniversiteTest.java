@@ -17,7 +17,7 @@ package tn.esprit.tpfoyer;
 		import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class UniversiteTest {
+class UniversiteTest {
 
 	@Mock
 	private UniversiteRepository universiteRepository;
