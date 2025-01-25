@@ -11,8 +11,6 @@ services:
       - 3306:3306
     volumes:
       - dbvolume:/var/lib/mysql
-    networks:
-      - monitoring-network
   app:
     depends_on:
       - mysqldb
@@ -27,26 +25,11 @@ services:
         "spring.datasource.username" : "root",
         "spring.datasource.password" : "" ,
         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
-        "spring.jpa.hibernate.ddl-auto" : "update",
-         "management.endpoints.web.exposure.include" : "health,info,prometheus",
-        "management.endpoint.prometheus.enabled" : true
+        "spring.jpa.hibernate.ddl-auto" : "update"
       }'
     volumes:
       - .m2:/root/.m2
     stdin_open: true
     tty: true
-    networks:
-      - monitoring-network
-  mysqldb-exporter:
-    image: prom/mysqld-exporter:latest
-    restart: unless-stopped
-    ports:
-      - "9104:9104"
-    environment:
-      DATA_SOURCE_NAME: root:@(mysqldb:3306)/foyer
-    networks:
-      - monitoring-network
 volumes:
   dbvolume :
-networks:
-  monitoring-network:
